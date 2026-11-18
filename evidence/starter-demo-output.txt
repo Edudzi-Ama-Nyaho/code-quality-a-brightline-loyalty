@@ -1,0 +1,5 @@
+Awarded 10 points to Kofi Mensah
+Result m1 (STANDARD), GHS 100  -> 10
+Awarded 50 points to Ama Owusu
+Result m2 (GOLD), GHS 250      -> 50
+Result unknown member, GHS 100 -> 0
