@@ -1,5 +1,6 @@
 package com.brightline.loyalty.points;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -43,7 +44,6 @@ class PointsCalculatorTest {
     })
     void appliesTierMultiplier(MembershipTier tier, BigDecimal amount, int expected)
             throws MemberNotFoundException {
-
         givenMemberOnTier(tier);
         assertEquals(expected, pointsFor(amount));
     }
@@ -51,7 +51,6 @@ class PointsCalculatorTest {
     @ParameterizedTest(name = "GHS {0} earns {1} base points")
     @CsvSource({"9.99, 0", "10.00, 1", "15.50, 1", "19.99, 1", "20.00, 2"})
     void roundsBasePointsDown(BigDecimal amount, int expected) throws MemberNotFoundException {
-
         givenMemberOnTier(MembershipTier.STANDARD);
         assertEquals(expected, pointsFor(amount));
     }
@@ -74,7 +73,7 @@ class PointsCalculatorTest {
         Purchase purchase = new Purchase("unknown", new BigDecimal("10.00"));
 
         MemberNotFoundException exception = assertThrows(MemberNotFoundException.class,
-                () -> calculator.calculatePoints(purchase));
+                () -> calculator.calculateAward(purchase));
         assertEquals("No member found with id: unknown", exception.getMessage());
     }
 
@@ -85,12 +84,26 @@ class PointsCalculatorTest {
         assertEquals("Member repository must not be null", exception.getMessage());
     }
 
+    @Test
+    void awardCarriesMemberAndAmount() throws MemberNotFoundException {
+        Member member = new Member(MEMBER_ID, "Kofi Mensah", MembershipTier.STANDARD);
+        when(memberRepository.findById(MEMBER_ID)).thenReturn(Optional.of(member));
+        BigDecimal amount = new BigDecimal("100.00");
+
+        PointsAward award = calculator.calculateAward(new Purchase(MEMBER_ID, amount));
+
+        assertAll(
+                () -> assertEquals(member, award.member()),
+                () -> assertEquals(amount, award.amount()),
+                () -> assertEquals(10, award.points()));
+    }
+
     private void givenMemberOnTier(MembershipTier tier) {
         when(memberRepository.findById(MEMBER_ID))
                 .thenReturn(Optional.of(new Member(MEMBER_ID, "Test Member", tier)));
     }
 
     private int pointsFor(BigDecimal amount) throws MemberNotFoundException {
-        return calculator.calculatePoints(new Purchase(MEMBER_ID, amount));
+        return calculator.calculateAward(new Purchase(MEMBER_ID, amount)).points();
     }
 }

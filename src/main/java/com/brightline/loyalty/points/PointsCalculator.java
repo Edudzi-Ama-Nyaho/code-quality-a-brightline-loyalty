@@ -21,13 +21,12 @@ public final class PointsCalculator {
                 "Member repository must not be null");
     }
 
-    public int calculatePoints(Purchase purchase) throws MemberNotFoundException {
+    public PointsAward calculateAward(Purchase purchase) throws MemberNotFoundException {
         Member member = memberRepository.findById(purchase.memberId())
                 .orElseThrow(() -> new MemberNotFoundException(purchase.memberId()));
-
         int tierPoints = member.tier().applyMultiplier(basePoints(purchase.amount()));
-
-        return addBonusPoints(purchase.amount(), tierPoints);
+        int points = addBonusPoints(purchase.amount(), tierPoints);
+        return new PointsAward(member, purchase.amount(), points);
     }
 
     private int basePoints(BigDecimal amount) {
