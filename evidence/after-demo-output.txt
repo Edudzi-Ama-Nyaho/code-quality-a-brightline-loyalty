@@ -1,0 +1,6 @@
+Awarded 10 points to Kofi Mensah (m1) for GHS 100.00
+Purchase refused: No member found with id: unknown
+Awarded 50 points to Ama Owusu (m2) for GHS 250.00
+Purchase refused: Amount must be more than zero: -50.00
+Awarded 30 points to Yaa Boateng (m3) for GHS 200.00
+Awarded 170 points to Ama Owusu (m2) for GHS 600.00
