@@ -1,0 +1,230 @@
+C:\Program Files\JetBrains\IntelliJ IDEA 2026.3\plugins\maven-plugin\lib\maven3\bin\mvn.cmd -Didea.version=2026.3 -Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA 2026.3\plugins\maven-plugin\lib\intellij.maven.rt\maven-event-listener.jar -Djansi.passthrough=true -Dstyle.color=always -Dmaven.repo.local=C:\Users\EdudziNyaho\.m2\repository test-compile org.pitest:pitest-maven:mutationCoverage -f pom.xml
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------< com.amalitech.training:brightline-loyalty >--------------
+[INFO] Building brightline-loyalty 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ brightline-loyalty ---
+[INFO] argLine set to -javaagent:C:\\Users\\EdudziNyaho\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.12\\org.jacoco.agent-0.8.12-runtime.jar=destfile=C:\\Users\\EdudziNyaho\\Desktop\\CQT\\Lab\\code-quality-a-brightline-loyalty\\target\\jacoco.exec
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ brightline-loyalty ---
+[INFO] skip non existing resourceDirectory C:\Users\EdudziNyaho\Desktop\CQT\Lab\code-quality-a-brightline-loyalty\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ brightline-loyalty ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ brightline-loyalty ---
+[INFO] skip non existing resourceDirectory C:\Users\EdudziNyaho\Desktop\CQT\Lab\code-quality-a-brightline-loyalty\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ brightline-loyalty ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- pitest:1.16.1:mutationCoverage (default-cli) @ brightline-loyalty ---
+Downloading from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-junit5-plugin/1.2.1/pitest-junit5-plugin-1.2.1.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-junit5-plugin/1.2.1/pitest-junit5-plugin-1.2.1.pom (10 kB at 15 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.9.2/junit-platform-launcher-1.9.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.9.2/junit-platform-launcher-1.9.2.pom (3.0 kB at 34 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.9.2/junit-bom-5.9.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.9.2/junit-bom-5.9.2.pom (5.6 kB at 108 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.pom (3.2 kB at 42 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.pom (2.8 kB at 45 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-junit5-plugin/1.2.1/pitest-junit5-plugin-1.2.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-junit5-plugin/1.2.1/pitest-junit5-plugin-1.2.1.jar (13 kB at 150 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.9.2/junit-platform-launcher-1.9.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-entry/1.16.1/pitest-entry-1.16.1.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/pitest/pitest/1.16.1/pitest-1.16.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar (103 kB at 234 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-util/9.7/asm-util-9.7.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-util/9.7/asm-util-9.7.jar (94 kB at 95 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-analysis/9.7/asm-analysis-9.7.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar (189 kB at 190 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.9.2/junit-platform-launcher-1.9.2.jar (169 kB at 169 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-html-report/1.16.1/pitest-html-report-1.16.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-analysis/9.7/asm-analysis-9.7.jar (35 kB at 30 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-aggregator/1.16.1/pitest-aggregator-1.16.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/pitest/pitest/1.16.1/pitest-1.16.1.jar (615 kB at 515 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar (238 kB at 148 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar (247 kB at 147 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar (62 kB at 34 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-api/2.1.0/maven-scm-api-2.1.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-api/2.1.0/maven-scm-api-2.1.0.jar (109 kB at 47 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar (332 kB at 139 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-html-report/1.16.1/pitest-html-report-1.16.1.jar (658 kB at 277 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-manager-plexus/2.1.0/maven-scm-manager-plexus-2.1.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-gitexe/2.1.0/maven-scm-provider-gitexe-2.1.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-entry/1.16.1/pitest-entry-1.16.1.jar (769 kB at 323 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-git-commons/2.1.0/maven-scm-provider-git-commons-2.1.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-manager-plexus/2.1.0/maven-scm-manager-plexus-2.1.0.jar (8.9 kB at 3.5 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-jgit/2.1.0/maven-scm-provider-jgit-2.1.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-git-commons/2.1.0/maven-scm-provider-git-commons-2.1.0.jar (37 kB at 14 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity-api/1.3/plexus-interactivity-api-1.3.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-gitexe/2.1.0/maven-scm-provider-gitexe-2.1.0.jar (75 kB at 29 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/jgit/org.eclipse.jgit/5.13.3.202401111512-r/org.eclipse.jgit-5.13.3.202401111512-r.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity-api/1.3/plexus-interactivity-api-1.3.jar (10 kB at 3.8 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/googlecode/javaewah/JavaEWAH/1.1.13/JavaEWAH-1.1.13.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-jgit/2.1.0/maven-scm-provider-jgit-2.1.0.jar (70 kB at 25 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/jgit/org.eclipse.jgit.ssh.apache/5.13.3.202401111512-r/org.eclipse.jgit.ssh.apache-5.13.3.202401111512-r.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/jgit/org.eclipse.jgit.ssh.apache/5.13.3.202401111512-r/org.eclipse.jgit.ssh.apache-5.13.3.202401111512-r.jar (182 kB at 54 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-osgi/2.7.0/sshd-osgi-2.7.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/com/googlecode/javaewah/JavaEWAH/1.1.13/JavaEWAH-1.1.13.jar (167 kB at 50 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-sftp/2.7.0/sshd-sftp-2.7.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar (658 kB at 171 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-core/2.7.0/sshd-core-2.7.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-sftp/2.7.0/sshd-sftp-2.7.0.jar (354 kB at 81 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-common/2.7.0/sshd-common-2.7.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-core/2.7.0/sshd-core-2.7.0.jar (887 kB at 138 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/net/i2p/crypto/eddsa/0.3.0/eddsa-0.3.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/pitest/pitest-aggregator/1.16.1/pitest-aggregator-1.16.1.jar (2.5 MB at 379 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/slf4j/jcl-over-slf4j/1.7.36/jcl-over-slf4j-1.7.36.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/slf4j/jcl-over-slf4j/1.7.36/jcl-over-slf4j-1.7.36.jar (17 kB at 2.5 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-hg/2.1.0/maven-scm-provider-hg-2.1.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/net/i2p/crypto/eddsa/0.3.0/eddsa-0.3.0.jar (63 kB at 9.4 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-svnexe/2.1.0/maven-scm-provider-svnexe-2.1.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-hg/2.1.0/maven-scm-provider-hg-2.1.0.jar (67 kB at 9.8 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-svn-commons/2.1.0/maven-scm-provider-svn-commons-2.1.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-common/2.7.0/sshd-common-2.7.0.jar (911 kB at 133 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-svnexe/2.1.0/maven-scm-provider-svnexe-2.1.0.jar (84 kB at 12 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/scm/maven-scm-provider-svn-commons/2.1.0/maven-scm-provider-svn-commons-2.1.0.jar (40 kB at 5.6 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/sshd/sshd-osgi/2.7.0/sshd-osgi-2.7.0.jar (1.7 MB at 230 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/jgit/org.eclipse.jgit/5.13.3.202401111512-r/org.eclipse.jgit-5.13.3.202401111512-r.jar (2.8 MB at 366 kB/s)
+[INFO] Root dir is : C:\Users\EdudziNyaho\Desktop\CQT\Lab\code-quality-a-brightline-loyalty
+[INFO] Found plugin : Default csv report plugin
+[INFO] Found plugin : Default xml report plugin
+[INFO] Found plugin : Default html report plugin
+[INFO] Found plugin : Static initializer code detector plugin
+[INFO] Found plugin : Excluded annotations plugin
+[INFO] Found plugin : Try with resources filter
+[INFO] Found plugin : Inlined finally block filter plugin
+[INFO] Found plugin : Implicit null check filter
+[INFO] Found plugin : Method reference null check filter
+[INFO] Found plugin : For each loop filter
+[INFO] Found plugin : Enum junk filter
+[INFO] Found plugin : Record junk mutation filter
+[INFO] Found plugin : String switch filter
+[INFO] Found plugin : Assertions filter
+[INFO] Found plugin : Enum switch filter
+[INFO] Found plugin : Logging calls filter
+[INFO] Found plugin : Infinite for loop filter
+[INFO] Found plugin : Long running iterator loop filter
+[INFO] Found plugin : For loop counter filter
+[INFO] Found plugin : Kotlin junk mutations filter
+[INFO] Found plugin : Groovy junk mutations filter
+[INFO] Found plugin : Max mutations per class limit
+[INFO] Found plugin : Equals shortcut equivalent mutant filter
+[INFO] Found plugin : Trivial return vals equivalence filter
+[INFO] Found plugin : Filters mutants with line number <= 1
+[INFO] Found plugin : Division by one equivalent mutant filter
+[INFO] Found plugin : Lombok junk mutations filter
+[INFO] Found plugin : Filter mutations to defensive wrappers such as unmodifiableCollection on return or field write
+[INFO] Found plugin : Mutant export plugin
+[INFO] Found plugin : Auto add java.awt.headless=true to keep keyboard focus on Mac OS
+[INFO] Found plugin : Auto set number of threads based on machine
+[INFO] Found plugin : Automatically add -ea to launch args to enable assertions
+[INFO] Found plugin : Default build verifier
+[INFO] Found plugin : Detect missing JUnit5 plugin
+[INFO] Found plugin : Detect missing TestNG plugin
+[INFO] Found plugin : Detect missing kotlin plugin
+[INFO] Found plugin : Detect missing spring plugin
+[INFO] Found plugin : Default coverage exporter
+[INFO] Found shared classpath plugin : Default mutation engine
+[INFO] Found shared classpath plugin : JUnit 5 test framework support
+[INFO] Found shared classpath plugin : JUnit plugin
+[INFO] Available mutators : EXPERIMENTAL_ARGUMENT_PROPAGATION,FALSE_RETURNS,TRUE_RETURNS,CONDITIONALS_BOUNDARY,CONSTRUCTOR_CALLS,EMPTY_RETURNS,INCREMENTS,INLINE_CONSTS,INVERT_NEGS,MATH,NEGATE_CONDITIONALS,NON_VOID_METHOD_CALLS,NULL_RETURNS,PRIMITIVE_RETURNS,REMOVE_CONDITIONALS_EQUAL_IF,REMOVE_CONDITIONALS_EQUAL_ELSE,REMOVE_CONDITIONALS_ORDER_IF,REMOVE_CONDITIONALS_ORDER_ELSE,VOID_METHOD_CALLS,EXPERIMENTAL_BIG_DECIMAL,EXPERIMENTAL_BIG_INTEGER,EXPERIMENTAL_MEMBER_VARIABLE,EXPERIMENTAL_NAKED_RECEIVER,REMOVE_INCREMENTS,EXPERIMENTAL_SWITCH
+[INFO] Adding org.pitest:pitest-junit5-plugin to SUT classpath
+[INFO] Adding org.pitest:pitest to SUT classpath
+[INFO] Mutating from C:\Users\EdudziNyaho\Desktop\CQT\Lab\code-quality-a-brightline-loyalty\target\classes
+[INFO] Replacing properties in argLine -javaagent:C:\\Users\\EdudziNyaho\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.12\\org.jacoco.agent-0.8.12-runtime.jar=destfile=C:\\Users\\EdudziNyaho\\Desktop\\CQT\\Lab\\code-quality-a-brightline-loyalty\\target\\jacoco.exec
+7:27:14?PM PIT >> INFO : Verbose logging is disabled. If you encounter a problem, please enable it before reporting an issue.
+7:27:14?PM PIT >> INFO : Created 4 mutation test units in pre scan
+7:27:14?PM PIT >> INFO : Sending 5 test classes to minion
+7:27:14?PM PIT >> INFO : Sent tests to minion
+7:27:15?PM PIT >> INFO : MINION : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+7:27:15?PM PIT >> INFO : MINION : WARNING: A Java agent has been loaded dynamically (C:\Users\EdudziNyaho\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.5\byte-buddy-agent-1.17.5.jar)
+7:27:15?PM PIT >> INFO : MINION : WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+7:27:15?PM PIT >> INFO : MINION : WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+7:27:15?PM PIT >> INFO : MINION : WARNING: Dynamic loading of agents will be disallowed by default in a future release
+7:27:15?PM PIT >> INFO : MINION : OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+\7:27:15?PM PIT >> INFO : Calculated coverage in 1 seconds.
+7:27:15?PM PIT >> INFO : Created 4 mutation test units
+|================================================================================
+7:27:23?PM PIT >> INFO : Completed in 9 seconds
+- Mutators
+================================================================================
+> org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator
+>> Generated 1 Killed 0 (0%)
+> KILLED 0 SURVIVED 1 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.PrimitiveReturnsMutator
+>> Generated 1 Killed 1 (100%)
+> KILLED 1 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator
+>> Generated 4 Killed 0 (0%)
+> KILLED 0 SURVIVED 1 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 3 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.NullReturnValsMutator
+>> Generated 1 Killed 1 (100%)
+> KILLED 1 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.MathMutator
+>> Generated 5 Killed 0 (0%)
+> KILLED 0 SURVIVED 3 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 2 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.EmptyObjectReturnValsMutator
+>> Generated 3 Killed 0 (0%)
+> KILLED 0 SURVIVED 2 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator
+>> Generated 4 Killed 0 (0%)
+> KILLED 0 SURVIVED 3 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 
+--------------------------------------------------------------------------------
+================================================================================
+- Timings
+================================================================================
+> pre-scan for mutations : < 1 second
+> scan classpath : < 1 second
+> coverage and dependency analysis : 1 seconds
+> build mutation tests : < 1 second
+> run mutation analysis : 7 seconds
+--------------------------------------------------------------------------------
+> Total  : 9 seconds
+--------------------------------------------------------------------------------
+================================================================================
+- Statistics
+================================================================================
+>> Line Coverage (for mutated classes only): 25/37 (68%)
+>> Generated 19 mutations Killed 2 (11%)
+>> Mutations with no coverage 7. Test strength 17%
+>> Ran 21 tests (1.11 tests per mutation)
+Enhanced functionality available at https://www.arcmutate.com/
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  21.134 s
+[INFO] Finished at: 2026-11-18T19:27:23Z
+[INFO] ------------------------------------------------------------------------
