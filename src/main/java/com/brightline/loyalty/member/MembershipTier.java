@@ -15,7 +15,7 @@ public enum MembershipTier {
         this.multiplier = multiplier;
     }
 
-    /** Multiplies base points by this tier's rate, rounded down: members earn whole points only. */
+    /** Multiplies base points by this tier's rate, rounded down to whole points. */
     public int applyMultiplier(int basePoints) {
         if (basePoints < 0) {
             throw new IllegalArgumentException("Base points must not be negative: " + basePoints);
