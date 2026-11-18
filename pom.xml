@@ -14,8 +14,8 @@
         <junit.version>5.13.4</junit.version>
         <mockito.version>5.18.0</mockito.version>
         <jacoco.version>0.8.14</jacoco.version>
-        <pitest.version>1.16.1</pitest.version>
-        <pitest.junit5.version>1.2.1</pitest.junit5.version>
+        <pitest.version>1.22.1</pitest.version>
+        <pitest.junit5.version>1.2.3</pitest.junit5.version>
     </properties>
 
     <dependencyManagement>
@@ -108,8 +108,8 @@
                 </executions>
             </plugin>
 
-            <!-- Mutation testing: mvn test-compile org.pitest:pitest-maven:mutationCoverage
-                 then open target/pit-reports/index.html -->
+            <!-- Mutation testing and quality gate: mvn clean verify runs PIT on the business rules
+                 and fails the build if any mutant survives; report in target/pit-reports -->
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -123,12 +123,21 @@
                 </dependencies>
                 <configuration>
                     <targetClasses>
-                        <param>com.brightline.loyalty.*</param>
+                        <param>com.brightline.loyalty.member.*</param>
+                        <param>com.brightline.loyalty.points.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>com.brightline.loyalty.*</param>
                     </targetTests>
+                    <mutationThreshold>100</mutationThreshold>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>mutation-gate</id>
+                        <phase>verify</phase>
+                        <goals><goal>mutationCoverage</goal></goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
