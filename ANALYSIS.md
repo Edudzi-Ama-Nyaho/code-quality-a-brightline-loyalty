@@ -1,6 +1,6 @@
 # ANALYSIS: Brightline Loyalty points service
 
-The Analysis section was written and committed before any code change. The Decisions section is added after the refactor.
+The Analysis section was written and committed before any code change. The Decisions section was added after the refactor.
 
 ## Analysis
 
@@ -159,4 +159,141 @@ Because nothing is reported, these errors cannot be counted or traced. And becau
 
 ## Decisions
 
-To be added after the refactor.
+This section explains the refactor: the design decisions, how the coming tier fits in, what changed in behaviour, and what was kept, fixed or rewritten from the AI's code and tests. Finding numbers (C1 to C11, T1 to T3) refer to the Analysis section above.
+
+### Design decisions
+
+**D1. Tiers are an enum that carries each tier's multiplier.** `MembershipTier` holds STANDARD, SILVER and GOLD, and each knows its own multiplier and how to apply it, so a new tier is one new constant and a tier the code does not know cannot exist. An interface with one class per tier was considered and rejected: as soon as member data comes from text it needs a name-to-class lookup, which brings back the String problem, and it adds files for no gain today. Fixes C3 and C5 (§12.2).
+
+**D2. The member repository is passed into the calculator.** `PointsCalculator` receives a `MemberRepository` through its constructor, so tests choose the members and storage can change without editing the calculator. Fixes C2 (§12.5).
+
+**D3. One job per class.** The old `calculatePoints` is split: `PointsCalculator` works out the points, `PointsAwardPrinter` prints, and `LoyaltyPointsDemo` runs the sample purchases and reports refusals. Calculating no longer prints. The bonus stays a private method of the calculator rather than a class of its own, because it is one line of rule with no reason to change apart from the other rules. Fixes C6 and C7 (§12.1, §4.4).
+
+**D4. An unknown member is a checked exception.** `MemberNotFoundException` extends `Exception`: a mistyped id is a normal event the caller must decide on, and the compiler refuses any caller that ignores it, so the silent 0 cannot come back. Fixes C1 (§6.1).
+
+**D5. An invalid purchase is an unchecked exception.** `InvalidPurchaseException` extends `IllegalArgumentException`: a zero, negative or over-precise amount is the caller's programming error. An amount with more than 2 decimal places is refused, not rounded, because rounding would silently change what the customer spent. Fixes C4.
+
+**D6. Records check their own values.** `Purchase` and `Member` are records whose constructors refuse invalid values, so an invalid purchase or member cannot exist anywhere and every class that uses them is protected. Fixes C3 and C4 (§8, §12.1).
+
+**D7. Money is `BigDecimal`, points are whole and rounded down.** Amounts are built from text so cedis and pesewas are exact; points are always rounded down, as in the starter. Fixes the `double` part of C8.
+
+**D8. The bonus stays "more than GHS 500".** It is now named constants with boundary tests at 499.99, 500.00 and 500.01. Changing it to "GHS 500 or more" was considered and rejected: it would change a business rule nobody asked us to change, so it is kept, made visible and flagged as a question for the business. Fixes C8 and C9 (§3.4).
+
+**D9. Only the demo catches the business exceptions.** `LoyaltyPointsDemo.awardPoints` holds the only try/catch, because the entry point is where something useful can be done: tell the user and carry on with the next purchase. A result object returned instead of an exception was considered and rejected: it would remove the try/catch but add two classes. Fixes C1 (§6.1).
+
+**D10. The calculator returns a `PointsAward`.** `calculateAward` returns the member, amount and points together, so the award line can show the member's name and id without a second lookup, and the printer takes one argument (§4.3). Printing only the member id was considered and rejected: the starter printed the name, and the name is what staff recognise.
+
+**D11. The printer is given where to print.** `PointsAwardPrinter` takes a `PrintStream` through its constructor: the demo passes `System.out` and the tests pass a captured stream, so they can check the exact line (§12.5).
+
+**D12. The repository takes its members from outside.** `InMemoryMemberRepository` stores the members it is given in a `HashMap` keyed by id and refuses duplicate ids, so no sample data lives in production code. Fixes C10.
+
+The comments that repeated the code or described a known flaw are gone (C11, §10.1). Each class has a one-line Javadoc saying its job; a method has one only where the code cannot show the reason.
+
+### How the new tier slots in
+
+Adding a tier, for example PLATINUM at three times the base points, means:
+
+1. **One new constant** in `MembershipTier`: `PLATINUM(new BigDecimal("3"))`. No method, no `if` and no other class changes.
+2. **New rows** in `src/test/resources/points-rules.csv`, such as `PLATINUM,10.00,3,Platinum triples base points` and `PLATINUM,500.01,200,Bonus is added after the multiplier`.
+
+The build enforces step 2: `coversEveryMembershipTier` fails until the new tier has rows in the rules table. If the new tier needs a different kind of rule (not just a multiplier), its constant can override `applyMultiplier` without touching the others.
+
+In the starter, the same change meant editing the if-chain inside `calculatePoints`, the method every tier depends on, and a tier the code did not know was silently paid at the base rate.
+
+### Behaviour changes
+
+Every points value for a valid purchase is unchanged: m1 still earns 10 points on GHS 100 and m2 50 points on GHS 250 ([after demo output](evidence/after-demo-output.txt)), and the rules table checks the boundaries. What changed:
+
+| Input | Starter | Now |
+|---|---|---|
+| Unknown member | 0 points, no error | Refused: "No member found with id: unknown" |
+| Zero or negative amount | Negative points | Refused: "Amount must be more than zero" |
+| Blank or missing member id | 0 points, no error | Refused: "Member id must not be blank" |
+| More than 2 decimal places | Accepted as `double` | Refused, not rounded |
+| Unknown tier name | Paid at the base rate | Cannot exist: the tier is an enum |
+| Two members with one id | Second replaces the first | Refused: "Duplicate member id" |
+| Award line | "Awarded 10 points to Kofi Mensah" | "Awarded 10 points to Kofi Mensah (m1) for GHS 100.00" |
+| A refusal in the demo | Hidden as 0 | Printed, and the next purchase still runs |
+
+### Points and money
+
+- **Type:** amounts are `BigDecimal` in GHS with at most 2 decimal places; points are `int`.
+- **Rounding:** always down, in two places only. `PointsCalculator.basePoints` gives 1 point per full GHS 10 (GHS 19.99 earns 1). `MembershipTier.applyMultiplier` drops part points (SILVER on 3 base points earns 4, not 4.5). Both match the starter.
+- **Comparisons** use `compareTo`, not `equals`: `BigDecimal.equals` treats 500 and 500.00 as different.
+
+### Kept, fixed or rewritten
+
+| AI item | Decision | Evidence |
+|---|---|---|
+| `PointsCalculator` | Rewritten | C1, C2, C6 to C9; the rules themselves kept, proven by the rules table |
+| `Member` | Rewritten as a record | String tier (C3); no validation (C4) |
+| `MemberRepository` | Kept, return type fixed | A sound seam; now returns `Optional` instead of `null` (C1) |
+| `InMemoryMemberRepository` | Fixed | Members passed in (C10); `Optional`; duplicates refused |
+| `Demo` | Rewritten as `LoyaltyPointsDemo` | Name said nothing (§3.1); now reports refusals |
+| T1 `calculatesGoldPoints` | Deleted, replaced | Mocked the class under test; `PointsCalculatorTest` mocks only the repository |
+| T2 `awardsPointsForAPurchase` | Deleted, replaced | Could never fail; SILVER now checked for exact values |
+| T3 `awardsPointsToAMember` | Deleted, replaced | Any positive number passed; STANDARD now checked for exactly 10 |
+
+### Tests
+
+75 tests, all passing on `mvn clean verify`:
+
+| Test class | Tests | Checks |
+|---|---|---|
+| `MembershipTierTest` | 6 | Each multiplier, rounding down, negative refused |
+| `MemberTest` | 8 | Valid member; blank id or name and missing tier refused |
+| `InMemoryMemberRepositoryTest` | 3 | Finds, finds nothing, refuses duplicates |
+| `PurchaseTest` | 14 | Amount and id boundaries |
+| `PointsCalculatorTest` | 15 | Mocked repository; every tier, rounding and bonus boundary, refusals |
+| `PointsAwardPrinterTest` | 9 | Exact printed lines |
+| `LoyaltyPointsDemoTest` | 2 | Whole chain with real classes; carries on after a refusal |
+| `PointsRulesTableTest` | 18 | 17 business examples, and every tier has rows |
+
+Every expected value was worked out from the business rules first, then checked against the code, never copied from it. Every mocked test asserts a result or an exception, not only that a mock was called.
+
+**Which test catches a planted bug in each rule:**
+
+| Rule | Bug | Test that fails |
+|---|---|---|
+| 1 point per full GHS 10 | Rounding up, or dividing wrongly | `roundsBasePointsDown` (19.99 and 9.99 rows) |
+| SILVER times 1.5, rounded down | Rounding half up | `MembershipTierTest` SILVER 3 row; rules table "Silver 4.5 is rounded down" |
+| GOLD times 2 | Wrong multiplier | `appliesTierMultiplier` GOLD row |
+| Bonus only above GHS 500 | `>` changed to `>=` | `addsBonusOnlyAboveFiveHundred` 500.00 row; three rules-table rows |
+| Bonus added after the multiplier | Bonus multiplied too | Rules table "Bonus is not multiplied" (GOLD 600) |
+| Unknown member refused | Returns 0 again | `refusesUnknownMember` |
+| Invalid amount refused | Check removed | `refusesZeroOrNegativeAmount` |
+
+The bonus bug was planted for real: the build failed on four tests ([planted bug evidence](evidence/gate-catches-planted-bug.txt)).
+
+**Coverage and mutation testing after the refactor:**
+- PIT on the `member` and `points` packages: **13 mutants, 13 killed (100%)**, line coverage 35 of 35. The starter's tests killed 2 of 19 ([PIT after](evidence/after-pit-summary.png)).
+- JaCoCo over the whole project: **97% of instructions** (13 of 436 missed) and **100% of branches** (0 of 30 missed); the `member` and `points` packages are 100% on both ([JaCoCo after](evidence/after-jacoco-summary.png)). The 13 missed instructions are all in `LoyaltyPointsDemo.main`, the last-resort `catch` ([JaCoCo demo](evidence/after-jacoco-demo-main.png)): reaching it means breaking the program on purpose, and its `System.exit` would stop the test run. Everything `main` calls is covered by `LoyaltyPointsDemoTest`.
+
+### Improvement: the build fails if the rules stop being really tested
+
+Brightline's coming change is a new tier. In the starter, a tier could be added, every test would stay green, and nobody would have checked its points. The improvement makes that impossible, in three layers:
+
+1. **A business rules table**, `src/test/resources/points-rules.csv`: tier, GHS amount, expected points and the rule in words. The business can read and check it without reading Java; the GHS 500 question from C8 is visible as "Exactly GHS 500 earns no bonus". `PointsRulesTableTest` runs every row through the real repository and calculator, and a failure prints the rule that broke.
+2. **A tier guard**, `coversEveryMembershipTier`: the build fails if any tier in the enum has no rows in the table, so the new tier cannot ship without its rules written down and checked.
+3. **A mutation gate** in `pom.xml`: `mvn verify` runs PIT on the `member` and `points` packages with a 100% threshold, so if any planted bug in the rules survives, the build fails. A suite like the starter's, which caught 2 of 19, could not pass.
+
+### Tooling changes
+
+- **JaCoCo 0.8.12 to 0.8.14:** 0.8.12 cannot read JDK 25 classes.
+- **PIT 1.16.1 to 1.22.1, JUnit 5 plugin 1.2.1 to 1.2.3:** 1.16.1 could not read JDK 25 classes and reported covered code as uncovered.
+- **Every Maven plugin pinned** to a version, so the build is the same on every machine.
+- **Mockito warning (not fixed):** on JDK 25 Mockito attaches itself at run time and prints a warning. It is harmless today; a later JDK will block it. The fix is to load Mockito as a Java agent in the Surefire and PIT settings.
+
+### Personal AI evaluation
+
+I used an AI assistant (Claude) throughout this lab. This is how the work was split.
+
+**Analysis.** I ran the starter, its tests, JaCoCo and PIT myself and wrote my own notes on what was wrong. Claude helped with the editing and wording that turned my notes into the Analysis section.
+
+**High-level design and decisions.** I worked out the design first: three packages (`member`, `points` and the root), what each class is responsible for, and where exceptions are caught.
+
+**Code and tests.** Claude wrote most of the code and tests, one class at a time. I reviewed and evaluated each method and test it wrote. The review led to these changes:
+- "1 points" fixed to "1 point"
+- a GHS 499.99 row added, because there was no "just below" case for the bonus
+- `awardPoints` builds the `Purchase` inside its `try`, because the `Purchase` constructor is what refuses a bad amount
+- PIT upgraded after it was found unreliable on JDK 25
