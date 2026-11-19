@@ -14,9 +14,14 @@ public record Purchase(String memberId, BigDecimal amount) {
         if (amount == null || amount.signum() <= 0) {
             throw new InvalidPurchaseException("Amount must be more than zero: " + amount);
         }
-        if (amount.stripTrailingZeros().scale() > MAX_DECIMAL_PLACES) {
+        if (decimalPlaces(amount) > MAX_DECIMAL_PLACES) {
             throw new InvalidPurchaseException("Amount must have at most "
                     + MAX_DECIMAL_PLACES + " decimal places: " + amount);
         }
+    }
+
+    /** Counts real decimal places: trailing zeros do not count, so 10.500 has one. */
+    private static int decimalPlaces(BigDecimal amount) {
+        return amount.stripTrailingZeros().scale();
     }
 }

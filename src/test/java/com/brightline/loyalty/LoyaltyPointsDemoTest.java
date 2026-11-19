@@ -40,4 +40,12 @@ class LoyaltyPointsDemoTest {
         assertEquals("Purchase refused: Amount must have at most 2 decimal places: 15.555"
                 + System.lineSeparator(), captured.toString());
     }
+
+    @Test
+    void refusesAmountThatIsNotANumber() {
+        demo.awardPoints("m1", "abc");
+
+        assertEquals("Purchase refused: Amount is not a number: abc"
+                + System.lineSeparator(), captured.toString());
+    }
 }

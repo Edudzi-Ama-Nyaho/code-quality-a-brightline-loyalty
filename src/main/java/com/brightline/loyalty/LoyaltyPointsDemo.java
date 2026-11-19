@@ -32,6 +32,7 @@ public final class LoyaltyPointsDemo {
             withSampleMembers(System.out).runSamplePurchases();
         } catch (RuntimeException e) {
             System.err.println("Loyalty points demo stopped: " + e.getMessage());
+            e.printStackTrace();
             System.exit(1);
         }
     }
@@ -53,10 +54,18 @@ public final class LoyaltyPointsDemo {
 
     void awardPoints(String memberId, String amountGhs) {
         try {
-            Purchase purchase = new Purchase(memberId, new BigDecimal(amountGhs));
+            Purchase purchase = new Purchase(memberId, parseAmount(amountGhs));
             printer.printAward(calculator.calculateAward(purchase));
         } catch (MemberNotFoundException | InvalidPurchaseException e) {
             printer.printRefusal(e.getMessage());
+        }
+    }
+
+    private static BigDecimal parseAmount(String amountGhs) {
+        try {
+            return new BigDecimal(amountGhs);
+        } catch (NumberFormatException e) {
+            throw new InvalidPurchaseException("Amount is not a number: " + amountGhs, e);
         }
     }
 }

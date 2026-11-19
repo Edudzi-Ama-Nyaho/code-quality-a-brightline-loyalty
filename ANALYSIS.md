@@ -179,7 +179,7 @@ This section explains the refactor: the design decisions, how the coming tier fi
 
 **D8. The bonus stays "more than GHS 500".** It is now named constants with boundary tests at 499.99, 500.00 and 500.01. Changing it to "GHS 500 or more" was considered and rejected: it would change a business rule nobody asked us to change, so it is kept, made visible and flagged as a question for the business. Fixes C8 and C9 (§3.4).
 
-**D9. Only the demo catches the business exceptions.** `LoyaltyPointsDemo.awardPoints` holds the only try/catch, because the entry point is where something useful can be done: tell the user and carry on with the next purchase. A result object returned instead of an exception was considered and rejected: it would remove the try/catch but add two classes. Fixes C1 (§6.1).
+**D9. Only the demo catches the business exceptions.** `LoyaltyPointsDemo.awardPoints` holds the only try/catch, because the entry point is where something useful can be done: tell the user and carry on with the next purchase. An amount that is not a number is turned into an `InvalidPurchaseException` that keeps the original error as its cause (§6.3), so it is refused like any other invalid purchase. A result object returned instead of an exception was considered and rejected: it would remove the try/catch but add two classes. Fixes C1 (§6.1).
 
 **D10. The calculator returns a `PointsAward`.** `calculateAward` returns the member, amount and points together, so the award line can show the member's name and id without a second lookup, and the printer takes one argument (§4.3). Printing only the member id was considered and rejected: the starter printed the name, and the name is what staff recognise.
 
@@ -236,7 +236,7 @@ Every points value for a valid purchase is unchanged: m1 still earns 10 points o
 
 ### Tests
 
-75 tests, all passing on `mvn clean verify`:
+76 tests, all passing on `mvn clean verify`:
 
 | Test class | Tests | Checks |
 |---|---|---|
@@ -246,7 +246,7 @@ Every points value for a valid purchase is unchanged: m1 still earns 10 points o
 | `PurchaseTest` | 14 | Amount and id boundaries |
 | `PointsCalculatorTest` | 15 | Mocked repository; every tier, rounding and bonus boundary, refusals |
 | `PointsAwardPrinterTest` | 9 | Exact printed lines |
-| `LoyaltyPointsDemoTest` | 2 | Whole chain with real classes; carries on after a refusal |
+| `LoyaltyPointsDemoTest` | 3 | Whole chain with real classes; carries on after a refusal; a non-numeric amount is refused |
 | `PointsRulesTableTest` | 18 | 17 business examples, and every tier has rows |
 
 Every expected value was worked out from the business rules first, then checked against the code, never copied from it. Every mocked test asserts a result or an exception, not only that a mock was called.
@@ -266,8 +266,8 @@ Every expected value was worked out from the business rules first, then checked 
 The bonus bug was planted for real: the build failed on four tests ([planted bug evidence](evidence/gate-catches-planted-bug.txt)).
 
 **Coverage and mutation testing after the refactor:**
-- PIT on the `member` and `points` packages: **13 mutants, 13 killed (100%)**, line coverage 35 of 35. The starter's tests killed 2 of 19 ([PIT after](evidence/after-pit-summary.png)).
-- JaCoCo over the whole project: **97% of instructions** (13 of 436 missed) and **100% of branches** (0 of 30 missed); the `member` and `points` packages are 100% on both ([JaCoCo after](evidence/after-jacoco-summary.png)). The 13 missed instructions are all in `LoyaltyPointsDemo.main`, the last-resort `catch` ([JaCoCo demo](evidence/after-jacoco-demo-main.png)): reaching it means breaking the program on purpose, and its `System.exit` would stop the test run. Everything `main` calls is covered by `LoyaltyPointsDemoTest`.
+- PIT on the `member` and `points` packages: **14 mutants, 14 killed (100%)**, line coverage 45 of 45. The starter's tests killed 2 of 19 ([PIT after](evidence/after-pit-summary.png)).
+- JaCoCo over the whole project: **96% of instructions** (15 of 457 missed) and **100% of branches** (0 of 30 missed); the `member` and `points` packages are 100% on both ([JaCoCo after](evidence/after-jacoco-summary.png)). The missed instructions are all in `LoyaltyPointsDemo.main`, the last-resort `catch` ([JaCoCo demo](evidence/after-jacoco-demo-main.png)): reaching it means breaking the program on purpose, and its `System.exit` would stop the test run. Everything `main` calls is covered by `LoyaltyPointsDemoTest`.
 
 ### Improvement: the build fails if the rules stop being really tested
 
@@ -297,3 +297,5 @@ I used an AI assistant (Claude) throughout this lab. This is how the work was sp
 - a GHS 499.99 row added, because there was no "just below" case for the bonus
 - `awardPoints` builds the `Purchase` inside its `try`, because the `Purchase` constructor is what refuses a bad amount
 - PIT upgraded after it was found unreliable on JDK 25
+
+**Hygiene review.** Evalu8's hygiene check found seven minor points, and I fixed all of them: a constant and a parameter renamed, the decimal-places check given a name, an amount that is not a number refused instead of stopping the demo, the stack trace kept for unexpected errors, and two tests added or tightened.

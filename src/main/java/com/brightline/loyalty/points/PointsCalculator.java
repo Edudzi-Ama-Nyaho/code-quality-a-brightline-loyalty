@@ -10,7 +10,7 @@ import java.util.Objects;
 /** Works out the points a member earns on a purchase. */
 public final class PointsCalculator {
 
-    private static final BigDecimal GHS_PER_BASE_POINT = new BigDecimal("10");
+    private static final BigDecimal GHS_PER_POINT = new BigDecimal("10");
     private static final BigDecimal BONUS_THRESHOLD_GHS = new BigDecimal("500");
     private static final int BONUS_POINTS = 50;
 
@@ -30,14 +30,14 @@ public final class PointsCalculator {
     }
 
     private int basePoints(BigDecimal amount) {
-        return amount.divide(GHS_PER_BASE_POINT, 0, RoundingMode.DOWN).intValueExact();
+        return amount.divide(GHS_PER_POINT, 0, RoundingMode.DOWN).intValueExact();
     }
 
     /** Adds the flat bonus for spending more than GHS 500; exactly GHS 500 earns none. */
-    private int addBonusPoints(BigDecimal amount, int points) {
+    private int addBonusPoints(BigDecimal amount, int tierPoints) {
         if (amount.compareTo(BONUS_THRESHOLD_GHS) > 0) {
-            return points + BONUS_POINTS;
+            return tierPoints + BONUS_POINTS;
         }
-        return points;
+        return tierPoints;
     }
 }

@@ -3,6 +3,7 @@ package com.brightline.loyalty.points;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.brightline.loyalty.member.Member;
@@ -75,6 +76,7 @@ class PointsCalculatorTest {
         MemberNotFoundException exception = assertThrows(MemberNotFoundException.class,
                 () -> calculator.calculateAward(purchase));
         assertEquals("No member found with id: unknown", exception.getMessage());
+        verify(memberRepository).findById("unknown");
     }
 
     @Test

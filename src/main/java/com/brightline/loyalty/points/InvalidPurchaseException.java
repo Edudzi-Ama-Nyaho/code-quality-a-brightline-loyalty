@@ -11,4 +11,8 @@ public class InvalidPurchaseException extends IllegalArgumentException {
     public InvalidPurchaseException(String message) {
         super(message);
     }
+
+    public InvalidPurchaseException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

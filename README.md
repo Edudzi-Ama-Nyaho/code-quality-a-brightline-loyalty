@@ -65,7 +65,7 @@ If `mvn` is not found in a terminal, use IntelliJ instead: open the **Maven** pa
 ```
 mvn clean test
 ```
-Passing looks like `Tests run: 75, Failures: 0, Errors: 0, Skipped: 0` and then `BUILD SUCCESS`.
+Passing looks like `Tests run: 76, Failures: 0, Errors: 0, Skipped: 0` and then `BUILD SUCCESS`.
 
 **Full check** (tests, coverage and the mutation gate):
 ```
@@ -75,7 +75,7 @@ This also:
 - measures **coverage** with JaCoCo: which lines the tests run. Report: `target/site/jacoco/index.html`
 - runs **mutation testing** with PIT: it plants small bugs in the points rules and checks that a test catches each one. Report: `target/pit-reports/index.html`
 
-The build **fails** if any test fails, or if any planted bug in the rules goes uncaught. Passing ends with `Generated 13 mutations Killed 13 (100%)` and `BUILD SUCCESS`.
+The build **fails** if any test fails, or if any planted bug in the rules goes uncaught. Passing ends with `Generated 14 mutations Killed 14 (100%)` and `BUILD SUCCESS`.
 
 A few lines starting `Mockito is currently self-attaching` and `WARNING: A Java agent has been loaded dynamically` are expected on JDK 25 and do not affect the result (see "Known limits").
 
